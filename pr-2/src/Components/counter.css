@@ -1,0 +1,52 @@
+
+body 
+{
+ 
+  font-family: 'Segoe UI', sans-serif;
+  background-color: rgb(170, 135, 235);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter 
+{
+  background: whitesmoke;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.counter h1 
+{
+  font-size: 2.5rem;
+  color: black;
+  margin-bottom: 30px;
+}
+
+button 
+{
+  background-color: rgb(245, 151, 245);
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  margin: 0 10px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover 
+{
+  background-color:rgb(248, 125, 248);
+}
+
+button:active 
+{
+  transform: scale(0.98);
+}
+
+
