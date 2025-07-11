@@ -1,0 +1,92 @@
+.hospital-container {
+  background-color: #cce3d3;
+  padding: 40px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.hospital-container h1 {
+    color: #000000;
+}
+
+.hospital-form {
+  background-color: #e4e3b2;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.09);
+  transition: all 0.3s ease-in-out;
+}
+
+.hospital-form .form-label {
+  font-weight: 600;
+  color: #000000;
+}
+
+.hospital-form .form-control,
+.hospital-form .form-select {
+  border-radius: 10px;
+  box-shadow: none;
+  transition: border-color 0.3s ease;
+}
+
+.hospital-form .form-control:focus,
+.hospital-form .form-select:focus {
+  border-color: #d14f4f;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.2);
+}
+
+.hospital-form button[type="submit"] {
+  margin-top: 15px;
+  padding: 10px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.patient-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+
+.patient-card {
+  width: 300px;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+  transition: transform 0.3s ease;
+}
+
+.patient-card:hover {
+  transform: translateY(-5px);
+}
+
+.patient-card .card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #079c5b;
+}
+
+.patient-card .card-text {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.patient-card .badge {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+
+.patient-card .btn {
+  margin-right: 8px;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 0.85rem;
+}
