@@ -2,7 +2,7 @@ import { Button, Col, Container, Form, Row, Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct, updateProduct } from "../Services/Actions/productAction.js";
+import { getProductAsync, updateProductAsync } from "../Services/Actions/productAction";
 import { FaEdit } from "react-icons/fa";
 
 const EditProduct = () => {
@@ -10,7 +10,7 @@ const EditProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { singleProduct: product } = useSelector((state) => state.productReducer);
+  const { product, isLoading } = useSelector((state) => state.product || {});
 
   const initialState = {
     id: "",
@@ -28,18 +28,18 @@ const EditProduct = () => {
 
   const handleChanged = (e) => {
     const { name, value } = e.target;
-    setInputForm({ ...inputForm, [name]: value });
+    setInputForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProduct(inputForm));
+    dispatch(updateProductAsync(inputForm));
     navigate("/");
   };
 
   useEffect(() => {
     if (id) {
-      dispatch(getProduct(id));
+      dispatch(getProductAsync(id));
     }
   }, [id, dispatch]);
 
@@ -58,6 +58,14 @@ const EditProduct = () => {
       });
     }
   }, [product, id]);
+
+    if (isLoading) {
+    return (
+      <Container className="py-5 text-center">
+        <h4>Loading product...</h4>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-5">

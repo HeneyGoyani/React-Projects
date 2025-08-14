@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteProduct,
+  deleteProductAsync,
   getAllProductAsync,
-} from "../Services/Actions/productAction.js";
+} from "../Services/Actions/productAction";
 import {
   Badge,
   Button,
@@ -21,14 +21,19 @@ import { FaClock } from "react-icons/fa";
 const Home = ({ searchTerm = "" }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { products = [], loading = false } = useSelector(
-    (state) => state.productReducer || {}
-  );
+
+// const { products = [], isLoading: loading } = useSelector(
+//     (state) => state.product || {}
+//   );]
+const { products = [], loading = false } = useSelector((state) => state.product || {});
+
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState("title");
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedCategory, setSelectedCategory] = useState("All");
+
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -36,9 +41,9 @@ const Home = ({ searchTerm = "" }) => {
   }, [dispatch]);
 
   const handleEdit = (id) => navigate(`/edit-product/${id}`);
-  const handleDelete = (id) => dispatch(deleteProduct(id));
+  const handleDelete = (id) => dispatch(deleteProductAsync(id));
 
-  const categories = ["All", ...new Set(products.map((p) => p.category))];
+const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boolean))];
 
   const filteredProducts = products.filter((prod) => {
     const matchesSearch = prod.title
@@ -82,22 +87,11 @@ const Home = ({ searchTerm = "" }) => {
     startIndex + itemsPerPage
   );
 
-  const paginationItems = [];
-  for (let page = 1; page <= totalPages; page++) {
-    paginationItems.push(
-      <Pagination.Item
-        key={page}
-        active={page === currentPage}
-        onClick={() => setCurrentPage(page)}
-      >
-        {page}
-      </Pagination.Item>
-    );
-  }
-
   return (
     <Container className="mt-4">
-      <h2 className="text-center fw-bold mb-4" style={{color: "#85BB65"}}>🛒 <span style={{color: "#FFF000"}}>Blink</span>it Cart</h2>
+      <h2 className="text-center fw-bold mb-4" style={{ color: "#85BB65" }}>
+        🛒 <span style={{ color: "#FFF000" }}>Blink</span>it Cart
+      </h2>
 
       <Row className="mb-3">
         <Col md={4} xs={12}>
@@ -160,7 +154,7 @@ const Home = ({ searchTerm = "" }) => {
               <Col key={prod.id}>
                 <Card
                   className="shadow-sm border border-warning h-100 position-relative p-2"
-                  style={{ backgroundColor: "#fffde7" }} 
+                  style={{ backgroundColor: "#fffde7" }}
                 >
                   {prod.offer && (
                     <div
@@ -254,10 +248,20 @@ const Home = ({ searchTerm = "" }) => {
             ))}
           </Row>
 
-          {sortedProducts.length > itemsPerPage && totalPages > 1 && (
+        {totalPages > 1 && (
             <div className="d-flex justify-content-center mt-4">
-              <Pagination>{paginationItems}</Pagination>
-            </div>
+              <Pagination>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <Pagination.Item
+                    key={i + 1}
+                    active={i + 1 === currentPage}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </Pagination.Item>
+                ))}
+              </Pagination>
+            </div>
           )}
         </>
       )}

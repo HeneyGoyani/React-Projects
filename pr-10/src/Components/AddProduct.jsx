@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import generateUniqueId from "generate-unique-id";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../Services/Actions/productAction.js";
+import { addProductAsync } from "../Services/Actions/productAction";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const AddProduct = () => {
     e.preventDefault();
     const id = generateUniqueId({ length: 6, useLetters: false });
     inputForm.id = id;
-    dispatch(addProduct(inputForm));
+    dispatch(addProductAsync(inputForm));
     navigate("/");
   };
 

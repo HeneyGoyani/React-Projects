@@ -1,0 +1,70 @@
+{
+  "products": [
+    {
+      "id": "395608",
+      "productName": "Yves Saint Lauren",
+      "desc": "Amul Gold Full Cream Milk (Polypack) Milk is homogenized toned pasteurized milk. Rich and creamy, this milk is an excellent source of vitamin A and vitamin D that enhances growth and development of the body tissues and the brain.",
+      "unit": "500 g",
+      "price": "09",
+      "category": "organic",
+      "image": "https://sfycdn.speedsize.com/56385b25-4e17-4a9a-9bec-c421c18686fb/beminimalist.co/cdn/shop/products/VitaminC10_1200-1-min.png?crop=center&height=1260&v=1646543848&width=840",
+      "offer": "20% off",
+      "deliveryTime": "15 mins"
+    },
+    {
+      "id": "819516",
+      "productName": "lipstick",
+      "desc": "Amul Gold Full Cream Milk (Polypack) Milk is homogenized toned pasteurized milk. Rich and creamy, this milk is an excellent source of vitamin A and vitamin D that enhances growth and development of the body tissues and the brain.",
+      "unit": "500 ml",
+      "price": "8",
+      "category": "personal",
+      "image": "https://m.media-amazon.com/images/I/51FGbb3EbgL._SX679_.jpg",
+      "offer": "20% off",
+      "deliveryTime": "15 mins"
+    },
+    {
+      "id": "222880",
+      "productName": "lipstick",
+      "desc": "Amul Gold Full Cream Milk (Polypack) Milk is homogenized toned pasteurized milk. Rich and creamy, this milk is an excellent source of vitamin A and vitamin D that enhances growth and development of the body tissues and the brain.",
+      "unit": "500 g",
+      "price": "1",
+      "category": "organic",
+      "image": "https://m.media-amazon.com/images/I/51FGbb3EbgL._SX679_.jpg",
+      "offer": "20% off",
+      "deliveryTime": "15 mins"
+    },
+    {
+      "id": "423266",
+      "productName": "lipstick",
+      "desc": "Amul Gold Full Cream Milk (Polypack) Milk is homogenized toned pasteurized milk. Rich and creamy, this milk is an excellent source of vitamin A and vitamin D that enhances growth and development of the body tissues and the brain.",
+      "unit": "500 g",
+      "price": "1",
+      "category": "cleaning",
+      "image": "https://www.nykaa.com/beauty-blog/wp-content/uploads/2024/07/sensitive-skin-banner.jpg",
+      "offer": "20% off",
+      "deliveryTime": "15 mins"
+    },
+    {
+      "id": "598731",
+      "productName": "lipstick",
+      "desc": "Amul Gold Full Cream Milk (Polypack) Milk is homogenized toned pasteurized milk. Rich and creamy, this milk is an excellent source of vitamin A and vitamin D that enhances growth and development of the body tissues and the brain.",
+      "unit": "500 g",
+      "price": "1",
+      "category": "cleaning",
+      "image": "https://m.media-amazon.com/images/I/51FGbb3EbgL._SX679_.jpg",
+      "offer": "20% off",
+      "deliveryTime": "15 mins"
+    },
+    {
+      "id": "377194",
+      "productName": "lipstick",
+      "desc": "Amul Gold Full Cream Milk (Polypack) Milk is homogenized toned pasteurized milk. Rich and creamy, this milk is an excellent source of vitamin A and vitamin D that enhances growth and development of the body tissues and the brain.",
+      "unit": "500 g",
+      "price": "1",
+      "category": "home",
+      "image": "https://m.media-amazon.com/images/I/51FGbb3EbgL._SX679_.jpg",
+      "offer": "20% off",
+      "deliveryTime": "15 mins"
+    }
+  ]
+}
