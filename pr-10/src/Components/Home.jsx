@@ -22,10 +22,7 @@ const Home = ({ searchTerm = "" }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-// const { products = [], isLoading: loading } = useSelector(
-//     (state) => state.product || {}
-//   );]
-const { products = [], loading = false } = useSelector((state) => state.product || {});
+const { products, loading = false } = useSelector((state) => state.product || {});
 
 
 
@@ -45,7 +42,7 @@ const { products = [], loading = false } = useSelector((state) => state.product 
 
 const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boolean))];
 
-  const filteredProducts = products.filter((prod) => {
+  const filteredProducts =  products.filter((prod) => {
     const matchesSearch = prod.title
       ?.toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -150,7 +147,8 @@ const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boo
       ) : (
         <>
           <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-            {paginatedProducts.map((prod) => (
+
+            {products.map((prod) => (
               <Col key={prod.id}>
                 <Card
                   className="shadow-sm border border-warning h-100 position-relative p-2"
