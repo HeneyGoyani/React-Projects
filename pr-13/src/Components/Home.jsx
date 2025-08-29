@@ -14,15 +14,17 @@ import {
   Spinner,
   Pagination,
   Form,
+  Modal,
 } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { FaClock } from "react-icons/fa";
+import { BsTextCenter } from "react-icons/bs";
 
 const Home = ({ searchTerm = "" }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-// const { products, loading = false } = useSelector((state) => state.product || {});
+
 const { products = [], isLoading = false } = useSelector(
     (state) => state.productReducer || {}
   );
@@ -32,15 +34,33 @@ const { products = [], isLoading = false } = useSelector(
   const [sortField, setSortField] = useState("title");
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedCategory, setSelectedCategory] = useState("All");
+   const [viewProduct, setViewProduct] = useState(null);
 
   const itemsPerPage = 5;
+
+    const isLoggedIn = !!localStorage.getItem("token"); 
 
   useEffect(() => {
     dispatch(getAllProductAsync());
   }, [dispatch]);
 
-  const handleEdit = (id) => navigate(`/edit-product/${id}`);
-  const handleDelete = (id) => dispatch(deleteProductAsync(id));
+  const handleEdit = (id) => {
+    if (!isLoggedIn) {
+      alert("You must sign in to edit a product.");
+      navigate("/signIn");
+      return;
+    }
+    navigate(`/edit-product/${id}`);
+  };
+
+  const handleDelete = (id) => {
+    if (!isLoggedIn) {
+      alert("You must sign in to delete a product.");
+      navigate("/signIn");
+      return;
+    }
+    dispatch(deleteProductAsync(id));
+  };
 
 const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boolean))];
 
@@ -184,6 +204,9 @@ const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boo
                   </div>
 
                   <Card.Body className="p-2 d-flex flex-column">
+                       <Card.Title className="fs-6 fw-semibold mb-1">
+                      {prod.title}
+                    </Card.Title>
                     <div className="text-muted small d-flex align-items-center mb-1">
                       <Badge bg="light" text="dark">
                         <FaClock className="me-1" size={12} />
@@ -193,9 +216,7 @@ const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boo
                       </Badge>
                     </div>
 
-                    <Card.Title className="fs-6 fw-semibold mb-1">
-                      {prod.title}
-                    </Card.Title>
+                 
 
                     <div className="text-muted small mb-2">
                       {prod.desc && <div>{prod.desc}</div>}
@@ -221,8 +242,18 @@ const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boo
                         ₹80
                       </span>
                     </div>
-
+                    
+                    
                     <div className="d-grid gap-2">
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={() => setViewProduct(prod)}
+                      >
+                        👁 View
+                      </Button>
+
+                    
                       <Button
                         variant="outline-success"
                         size="sm"
@@ -265,6 +296,90 @@ const categories = ["All", ...new Set(products.map((p) => p.category).filter(Boo
           )}
         </>
       )}
+
+     <Modal
+  show={!!viewProduct}
+  onHide={() => setViewProduct(null)}
+  size="lg"
+  centered
+  backdrop="static"
+>
+  {viewProduct && (
+    <>
+      <Modal.Header
+        closeButton
+        style={{
+          background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
+          color: "#fff",
+          textAlign: "center",
+          justifyContent: "center",
+          borderBottom: "none",
+        }}
+      >
+        <div className="w-100 text-center">
+          <h3 style={{ margin: 0 }}>Single Product View</h3>
+          <h5 style={{ fontWeight: "bold", marginTop: "5px" }}>
+            {viewProduct.title}
+          </h5>
+        </div>
+      </Modal.Header>
+
+      <Modal.Body className="text-center p-4">
+        <div
+          style={{
+            backgroundColor: "#f8f9fa",
+            padding: "20px",
+            borderRadius: "12px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          }}
+        >
+          <img
+            src={viewProduct.image}
+            alt={viewProduct.title}
+            style={{
+              maxWidth: "80%",
+              height: "280px",
+              objectFit: "contain",
+              borderRadius: "10px",
+            }}
+          />
+          <p className="mt-3 text-muted">{viewProduct.desc}</p>
+          <h4 className="fw-bold text-success">₹{viewProduct.price}</h4>
+          <p>
+            <Badge
+              bg="info"
+              className="px-3 py-2"
+              style={{ fontSize: "0.9rem" }}
+            >
+              {viewProduct.category}
+            </Badge>
+          </p>
+          <p className="text-secondary">
+            <strong>Delivery:</strong> {viewProduct.deliveryTime}
+          </p>
+        </div>
+      </Modal.Body>
+
+      <Modal.Footer
+        style={{
+          borderTop: "none",
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#f1f3f6",
+        }}
+      >
+        <Button
+          variant="outline-danger"
+          onClick={() => setViewProduct(null)}
+          style={{ borderRadius: "8px", padding: "8px 20px" }}
+        >
+          Close
+        </Button>
+      </Modal.Footer>
+    </>
+  )}
+</Modal>
+
     </Container>
   );
 };

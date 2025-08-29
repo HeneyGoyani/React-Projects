@@ -31,6 +31,15 @@ const EditProduct = () => {
     setInputForm((prev) => ({ ...prev, [name]: value }));
   };
 
+        const handleFileChanged = async (e) => {
+      let imagePath = await uploadImage(e.target.files[0]);
+  
+      setInputForm({
+        ...inputForm,
+        image: imagePath,
+      });
+    }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProductAsync(inputForm));
@@ -194,11 +203,10 @@ const EditProduct = () => {
           <Form.Group className="mb-4">
             <Form.Label className="fw-semibold">Image URL</Form.Label>
             <Form.Control
-              type="text"
+              type="file"
               placeholder="Enter image URL"
               name="image"
-              value={inputForm.image}
-              onChange={handleChanged}
+              onChange={handleFileChanged}
             />
           </Form.Group>
 

@@ -1,7 +1,10 @@
-import { Navbar, Container, FormControl, Nav, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Navbar, Container, FormControl, Nav, Modal , Button , Form  } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { PiShoppingCartLight } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutAsync} from "../Services/Actions/userAction"; 
 import logo from "../assets/images/logo.svg";
 import bannerPharma from "../assets/images/banner1.jpg";
 import bannerPet from "../assets/images/banner2.jpg";
@@ -54,6 +57,24 @@ const BlinkitHeader = ({ onSearch }) => {
 
     ];
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.userReducer);
+
+  const [showLogin, setShowLogin] = useState(false);
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(loginAsync(loginData));
+    setShowLogin(false); 
+  };
+
+  const handleLogOut = () => {
+    dispatch(logOutAsync());
+    navigate("/"); 
+  };
+
   return (
     <>
       <Navbar bg="white" expand="lg" sticky="top" className="shadow-sm border-bottom py-2">
@@ -89,10 +110,38 @@ const BlinkitHeader = ({ onSearch }) => {
             </div>
           </div>
 
-          <Nav className="align-items-center gap-4">
-            <Nav.Link as={Link} to="/login" className="text-dark fw-semibold">
-              Login
-            </Nav.Link>
+             <Nav className="align-items-center gap-4">
+            {!user ? (
+                  <button
+                    onClick={() => navigate('/signIn')}
+                    style={{
+                      backgroundColor: '#eda60dff',
+                      color: '#000000ff',
+                      padding: '10px 20px',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                      transition: 'background 0.3s ease',
+                    }}
+                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#6AFF05')}
+                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#eda60dff')}
+                  >
+                    Login
+                  </button>
+
+            ) : (
+              <>
+                <span className="fw-semibold text-dark">{user.email}</span>
+                <Button 
+                  variant="outline-danger"
+                  onClick={handleLogOut}
+                  style={{ fontWeight: "600", padding: "6px 16px", height: "42px" }}
+                >
+                  Logout
+                </Button>
+              </>
+            )}
             <Nav.Link as={Link} to="/add-product" className="text-dark d-flex align-items-center">
               <Button
                 className="d-flex align-items-center justify-content-center gap-2"
@@ -164,6 +213,35 @@ const BlinkitHeader = ({ onSearch }) => {
           </div>
         </Container>
       </div>
+
+       <Modal show={showLogin} onHide={() => setShowLogin(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign In</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleLogin}>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={loginData.email}
+                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={loginData.password}
+                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                required
+              />
+            </Form.Group>
+            <Button type="submit" variant="primary" className="w-100">Login</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
